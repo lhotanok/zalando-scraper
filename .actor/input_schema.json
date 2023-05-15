@@ -1,0 +1,39 @@
+{
+    "title": "Zalando Scraper Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "URLs to start with. The actor currently supports basic category URLs such as `https://www.zalando.co.uk/womens-clothing/` and URLs of their subcategories.",
+            "editor": "stringList",
+            "prefill": [
+                "https://www.zalando.co.uk/womens-clothing/",
+                "https://www.zalando.co.uk/mens-clothing/",
+                "https://www.zalando.co.uk/childrens-clothing/"
+            ]
+        },
+        "maxItems": {
+            "title": "Max items",
+            "type": "integer",
+            "description": "Set the maximum number of items you want to scrape. If you leave this field unset, the actor will extract all available items.",
+            "minimum": 0,
+            "prefill": 100,
+            "unit": "items"
+        },
+        "proxyConfiguration": {
+            "title": "Proxy Configuration",
+            "type": "object",
+            "description": "Use either automatic Apify proxies or your own.",
+            "prefill": {
+                "useApifyProxy": true
+            },
+            "default": {
+                "useApifyProxy": true
+            },
+            "editor": "proxy",
+            "sectionCaption": "Advanced options (proxy configuration)"
+        }
+    }
+}
