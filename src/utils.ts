@@ -1,7 +1,33 @@
 import { log } from 'apify';
-import { CheerioCrawlingContext, CheerioRoot, EnqueueLinksOptions } from 'crawlee';
-import { GRAPHQL_PRODUCTS_DATA_SEL, LABELS, PRODUCT_GRAPHQL_ID } from './constants.js';
+import {
+    CheerioCrawlingContext,
+    CheerioRoot,
+    EnqueueLinksOptions,
+    Request,
+} from 'crawlee';
+import {
+    GRAPHQL_PRODUCTS_DATA_SEL,
+    LABELS,
+    PRODUCT_GRAPHQL_ID,
+} from './constants.js';
 import { GraphqlProductsResponse, GraphqlProduct } from './types.js';
+
+export const categorizeUrls = (urls: string[]) : Request[] => {
+    const categorizedRequests = urls.map((url) => {
+        let label = LABELS.CATEGORY;
+
+        if (url.match(/\.html$/i)) {
+            label = LABELS.DETAIL;
+        }
+
+        return new Request({
+            url,
+            label,
+        });
+    });
+
+    return categorizedRequests;
+};
 
 export const tryParseReponse = <ResponseType>(responseJson: string, infoUrl?: string) : ResponseType => {
     try {

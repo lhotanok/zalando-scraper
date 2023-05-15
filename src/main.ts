@@ -2,6 +2,7 @@ import { Actor } from 'apify';
 import { CheerioCrawler, CheerioCrawlingContext } from 'crawlee';
 import { router } from './routes/router.js';
 import { CrawleeState, InputSchema } from './types.js';
+import { categorizeUrls } from './utils.js';
 
 await Actor.init();
 
@@ -36,6 +37,8 @@ await crawler.useState<CrawleeState>({
     remainingItems: maxItems,
 });
 
-await crawler.run(startUrls);
+await crawler.run(
+    categorizeUrls(startUrls),
+);
 
 await Actor.exit();
