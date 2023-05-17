@@ -12,7 +12,8 @@ Let's explore one of the products to get a glimpse of the collected data:
 **🏷️ Brand**: [Even&Odd](https://www.zalando.co.uk/even-odd/)
 
 **🖼️ Thumbnail**:
-![Thumbnail](https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg?imwidth=156&filter=packshot)
+
+<img src="https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg?imwidth=156&filter=packshot" alt="Thumbnail" style="float: left;">
 
 **💰 Price**: £31.99 (GBP)
 
