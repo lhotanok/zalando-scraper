@@ -21,8 +21,7 @@
                             "name",
                             "sku",
 							"brand.name",
-							"price.current",
-							"priceCurrency",
+							"formattedPrice.current",
 							"rating",
 							"ratingCount",
 							"reviewsCount",
@@ -33,7 +32,7 @@
                         ],
                         "flatten": [
 							"brand",
-							"price",
+							"formattedPrice",
 							"color"
                         ]
                     },
@@ -47,14 +46,10 @@
                                 "label": "Brand",
                                 "format": "text"
                             },
-							"price.current": {
+							"formattedPrice.current": {
                                 "label": "Current price",
-                                "format": "number"
+                                "format": "text"
                             },
-							"priceCurrency": {
-								"label": "Currency",
-								"format": "text"
-							},
 							"rating": {
 								"format": "number"
 							},

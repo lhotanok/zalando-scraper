@@ -145,7 +145,8 @@ const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>
         RATING_REVIEWS_GRAPHQL_ID,
     )[0] as GraphqlRatingReviews;
 
-    const { color, family, simples } = ratingReviews.data.product;
+    const { color, family, simples, displayPrice, category } = ratingReviews.data.product;
+    const { original: originalPrice, promotional: promotionalPrice } = displayPrice;
 
     const userReviews = family.reviews || { edges: [], totalCount: 0 };
     const reviews = userReviews.edges.map((review) => ({
@@ -166,6 +167,7 @@ const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>
     };
 
     return {
+        category,
         reviewsCount: userReviews.totalCount,
         ratingCount: rating.totalCount,
         rating: rating.average,
@@ -173,5 +175,10 @@ const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>
         reviews,
         color,
         priceCurrency: simples[0] ? simples[0].offer.price.original.currency : null,
+        formattedPrice: {
+            original: originalPrice.formatted,
+            current: promotionalPrice ? promotionalPrice.formatted : originalPrice.formatted,
+            promotional: promotionalPrice ? promotionalPrice.formatted : null,
+        },
     };
 };

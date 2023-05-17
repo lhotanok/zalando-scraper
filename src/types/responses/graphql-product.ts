@@ -158,6 +158,15 @@ export type GraphqlRatingReviews = {
                 name: string;
                 label: string;
             };
+            displayPrice: {
+                original: {
+                    formatted: string;
+                },
+                promotional: null | {
+                    formatted: string;
+                };
+            };
+            category: string;
             simples: {
                 size: string;
                 sku: string;
