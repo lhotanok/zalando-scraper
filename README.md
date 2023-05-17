@@ -13,11 +13,9 @@ Let's explore one of the products to get a glimpse of the collected data:
 
 **🖼️ Thumbnail**:
 
-<img src="https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg?imwidth=156&filter=packshot" alt="Thumbnail" style="float: left;">
+<img src="https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg?imwidth=156&filter=packshot" alt="Thumbnail" style="float: left; margin-right: 100%; margin-bottom: 1%">
 
-<br>  <!-- Forcing a line break for proper displaying on the Apify platform --> 
-
-**💰 Price**: £31.99 (GBP)
+**💰 Price**: £31.99
 
 **📏 Available Sizes**: XS, S, M, L, XL, XXL, 3XL
 
