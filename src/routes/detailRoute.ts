@@ -76,8 +76,8 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
 const parseAttributes = (attributes: Attribute[]) => {
     return attributes.map((attribute) => ({
         key: attribute.key,
-        value: decodeURIComponent(attribute.value),
-    }));
+        value: decodeURIComponent(attribute.value).replace(/^undefined$/i, ''),
+    })).filter((attribute) => attribute.value);
 };
 
 const parseProductAttributes = (graphqlCache: Record<string, GraphqlProductData>) => {
@@ -89,14 +89,21 @@ const parseProductAttributes = (graphqlCache: Record<string, GraphqlProductData>
     const { product: { condition, attributeSuperClusters } } = productAttributes.data;
 
     const attributeCategories = attributeSuperClusters.map((superCluster) => {
+        const attributes: {
+            key: string;
+            value: string;
+        }[] = [];
+
+        superCluster.clusters.forEach((cluster) => {
+            attributes.push(...parseAttributes(cluster.attributes));
+        });
+
         return {
             categoryId: superCluster.id,
             categoryName: superCluster.label,
-            attributes: superCluster.clusters.map(
-                ({ attributes }) => parseAttributes(attributes),
-            ),
+            attributes,
         };
-    });
+    }).filter((category) => category.attributes.length > 0);
 
     return { condition, attributeCategories };
 };
