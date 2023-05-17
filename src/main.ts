@@ -1,8 +1,9 @@
 import { Actor } from 'apify';
 import { CheerioCrawler, CheerioCrawlingContext } from 'crawlee';
 import { router } from './routes/router.js';
-import { CrawleeState, InputSchema } from './types.js';
+import { CrawleeState } from './types/crawlee-state.js';
 import { categorizeUrls } from './utils.js';
+import { InputSchema } from './types/input-schema.js';
 
 await Actor.init();
 
@@ -21,6 +22,7 @@ const proxyConfiguration = await Actor.createProxyConfiguration(proxyConfig);
 const crawler = new CheerioCrawler({
     proxyConfiguration,
     requestHandler: router,
+    navigationTimeoutSecs: 45,
     preNavigationHooks: [
         async (context: CheerioCrawlingContext) => {
             const { crawler: cheerioCrawler, log } = context;

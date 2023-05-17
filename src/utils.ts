@@ -8,9 +8,9 @@ import {
 import {
     GRAPHQL_PRODUCTS_DATA_SEL,
     LABELS,
-    PRODUCT_GRAPHQL_ID,
+    SIMPLE_PRODUCT_GRAPHQL_ID,
 } from './constants.js';
-import { GraphqlProductsResponse, GraphqlProduct } from './types.js';
+import { GraphqlSimpleProductsResponse, GraphqlSimpleProduct } from './types/responses/graphql-simple-products.js';
 
 export const categorizeUrls = (urls: string[]) : Request[] => {
     const categorizedRequests = urls.map((url) => {
@@ -67,13 +67,24 @@ export const enqueueProductDetails = async (
 
 export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
     const dataJson = $(GRAPHQL_PRODUCTS_DATA_SEL).text();
-    const productsResponse: GraphqlProductsResponse = tryParseReponse(dataJson, url);
+    const productsResponse: GraphqlSimpleProductsResponse = tryParseReponse(dataJson, url);
 
-    const products: GraphqlProduct[] = Object.entries(productsResponse.graphqlCache)
-        .filter((entry) => entry[0].includes(PRODUCT_GRAPHQL_ID))
-        .map((entry) => entry[1]);
+    const products: GraphqlSimpleProduct[] = parseRelevantGraphqlData(
+        productsResponse.graphqlCache,
+        SIMPLE_PRODUCT_GRAPHQL_ID,
+    );
 
     const urls = products.map((product) => product.data.product.uri);
 
     return urls;
+};
+
+export const parseRelevantGraphqlData = <DataType>(
+    graphqlCache: Record<string, DataType>, graphqlId: string,
+) : DataType[] => {
+    const data: DataType[] = Object.entries(graphqlCache)
+        .filter((entry) => entry[0].includes(graphqlId))
+        .map((entry) => entry[1]);
+
+    return data;
 };

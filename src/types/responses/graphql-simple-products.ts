@@ -1,29 +1,18 @@
-import { ProxyConfigurationOptions } from 'crawlee';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { PRODUCT_GRAPHQL_ID } from './constants.js';
+import { SIMPLE_PRODUCT_GRAPHQL_ID } from '../../constants.js';
 
-export type InputSchema = {
-    startUrls: string[];
-    maxItems?: number;
-    proxyConfiguration: ProxyConfigurationOptions;
-};
-
-export type CrawleeState = {
-    remainingItems: number;
-};
-
-export type GraphqlProductsResponse = {
+export type GraphqlSimpleProductsResponse = {
     enrichedEntity: {
         id: string;
         type: 'collection';
         hints: string[];
         rawExternalData: string;
     };
-    /** Fields holding GraphQL products need to include {@link PRODUCT_GRAPHQL_ID} as a substring. */
-    graphqlCache: Record<string, GraphqlProduct>;
+    /** Fields holding GraphQL products need to include {@link SIMPLE_PRODUCT_GRAPHQL_ID} as a substring. */
+    graphqlCache: Record<string, GraphqlSimpleProduct>;
 };
 
-export type GraphqlProduct = {
+export type GraphqlSimpleProduct = {
     data: {
         product: {
             id: string;
