@@ -13,7 +13,9 @@ const {
         'https://www.zalando.co.uk/mens-clothing/',
         'https://www.zalando.co.uk/childrens-clothing/',
     ],
-    proxyConfiguration: proxyConfig,
+    proxyConfiguration: proxyConfig = {
+        useApifyProxy: true,
+    },
     maxItems = Number.MAX_SAFE_INTEGER,
 } = await Actor.getInput<InputSchema>() ?? {};
 
