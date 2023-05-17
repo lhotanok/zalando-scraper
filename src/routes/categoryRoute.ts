@@ -25,6 +25,12 @@ const enqueueNextPages = async (context: CheerioCrawlingContext) => {
 
     const currentPage = getCurrentPage(url);
 
+    if (new URL(url).searchParams.get('p')) {
+        log.info(`Opened page ${currentPage}, not enqueueing next pages.
+        If you want to crawl all category pages, remove page parameter 'p=${currentPage}' from your start URL.`, { url });
+        return;
+    }
+
     const totalPages = parseTotalPagesCount($, currentPage);
     const nextPageUrls = buildNextPageUrls(url, currentPage, totalPages);
 
