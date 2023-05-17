@@ -1,12 +1,81 @@
 {
 	"actorSpecification": 1,
 	"name": "zalando-scraper",
-	"title": "Project Cheerio Crawler Typescript",
-	"description": "Crawlee and Cheerio project in typescript.",
+	"title": "Zalando Scraper",
+	"description": "This actor extracts product data from zalando.com.",
 	"version": "0.0",
 	"meta": {
 		"templateId": "ts-crawlee-cheerio"
 	},
 	"input": "./input_schema.json",
-	"dockerfile": "./Dockerfile"
+	"dockerfile": "./Dockerfile",
+	"storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "views": {
+                "overview": {
+                    "title": "Overview",
+                    "transformation": {
+                        "fields": [
+                            "thumbnail",
+                            "name",
+                            "sku",
+							"brand.name",
+							"price.current",
+							"priceCurrency",
+							"rating",
+							"ratingCount",
+							"reviewsCount",
+							"color.label",
+							"available",
+							"sizes",
+                            "url"
+                        ],
+                        "flatten": [
+							"brand",
+							"price",
+							"color"
+                        ]
+                    },
+                    "display": {
+                        "component": "table",
+                        "properties": {
+                            "thumbnail": {
+                                "format": "image"
+                            },
+							"brand.name": {
+                                "label": "Brand",
+                                "format": "text"
+                            },
+							"price.current": {
+                                "label": "Current price",
+                                "format": "number"
+                            },
+							"priceCurrency": {
+								"label": "Currency",
+								"format": "text"
+							},
+							"rating": {
+								"format": "number"
+							},
+							"ratingCount": {
+								"label": "Number of ratings"
+							},
+							"reviewsCount": {
+								"label": "Number of reviews"
+							},
+							"color.label": {
+								"label": "Color",
+								"format": "text"
+							},
+                            "url": {
+                                "label": "URL",
+                                "format": "link"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

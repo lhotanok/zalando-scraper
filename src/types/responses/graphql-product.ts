@@ -30,6 +30,10 @@ export type GraphqlProductImagesAndSimples = {
                 kind: string;
                 info: string | null;
             }[];
+            galleryThumbnails: {
+                __typename: 'Image';
+                uri: string;
+            }[];
             galleryMedia: {
                 __typename: 'Image';
                 uri: string;
@@ -95,20 +99,20 @@ export type GraphqlGeneralProductInfo = {
                 name: string;
             },
             display_price: {
-                current: {
+                current: null | {
                     amount: number;
                 },
-                original: {
+                original: null | {
                     amount: number;
                 },
-                promotional: {
+                promotional: null | {
                     amount: number;
                 },
                 displayMode: string;
             },
             navigationTargetGroup: string;
             name: string;
-            sizeAdvice: {
+            sizeAdvice: null | {
                 recommendedOffset: string;
             };
             simples: SizeWithStockInfo[];

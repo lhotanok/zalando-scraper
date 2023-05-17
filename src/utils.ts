@@ -51,6 +51,7 @@ export const enqueueProductDetails = async (
 
     const enqueueLinksOptions: EnqueueLinksOptions = {
         selector,
+        exclude: [/\/outfits\//i],
         label: LABELS.DETAIL,
         forefront: true,
     };
@@ -74,7 +75,8 @@ export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
         SIMPLE_PRODUCT_GRAPHQL_ID,
     );
 
-    const urls = products.map((product) => product.data.product.uri);
+    const urls = products.map((product) => product.data.product.uri)
+        .filter((productUrl) => !productUrl.match(/\/outfits\//i));
 
     return urls;
 };

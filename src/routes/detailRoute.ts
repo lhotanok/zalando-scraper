@@ -18,9 +18,10 @@ import {
     GraphqlGeneralProductInfo,
     GraphqlRatingReviews,
 } from '../types/responses/graphql-product.js';
+import { CrawleeState } from '../types/crawlee-state.js';
 
 export const detailRoute = async (context: CheerioCrawlingContext) => {
-    const { request: { url }, $, log } = context;
+    const { crawler, request: { url }, $, log } = context;
 
     const title = $('head title').text();
     log.info(`${title}`, { url });
@@ -35,7 +36,13 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
     const ratingReviews = parseRatingWithReviews(graphqlCache);
     const attributes = parseProductAttributes(graphqlCache);
 
-    await Actor.setValue('PRODUCT', graphqlCache);
+    const state = await crawler.useState<CrawleeState>();
+
+    if (state.remainingItems <= 0) {
+        return;
+    }
+
+    state.remainingItems--;
 
     await Actor.pushData({
         url,
@@ -59,9 +66,11 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
     const images = gallery.filter((url) => !url.match(/\.(mp4|avi)/));
     const videos = gallery.filter((url) => url.match(/\.(mp4|avi)/));
 
+    const thumbnail = product.galleryThumbnails[0].uri;
+
     const { name, sku, brand, flags, comingSoon } = product;
 
-    return { name, sku, brand, flags, comingSoon, images, videos };
+    return { name, sku, brand, flags, comingSoon, thumbnail, images, videos };
 };
 
 const parseAttributes = (attributes: Attribute[]) => {
@@ -112,13 +121,13 @@ const parseGeneralProductInfo = (graphqlCache: Record<string, GraphqlProductData
 
     return {
         price: {
-            original: parseProductPriceAmount(price.original.amount),
-            current: parseProductPriceAmount(price.current.amount),
-            promotional: parseProductPriceAmount(price.promotional.amount),
+            original: price.original ? parseProductPriceAmount(price.original.amount) : null,
+            current: price.current ? parseProductPriceAmount(price.current.amount) : null,
+            promotional: price.promotional ? parseProductPriceAmount(price.promotional.amount) : null,
         },
         sizes,
         available: availabilityStatus === 'AVAILABLE',
-        sizeAdvice: sizeAdvice.recommendedOffset,
+        sizeAdvice: sizeAdvice ? sizeAdvice.recommendedOffset : null,
         navigationTargetGroup,
     };
 };

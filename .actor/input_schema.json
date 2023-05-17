@@ -6,7 +6,7 @@
         "startUrls": {
             "title": "Start URLs",
             "type": "array",
-            "description": "URLs to start with. The actor currently supports basic category URLs such as `https://www.zalando.co.uk/womens-clothing/`, URLs of their subcategories and also direct product URLs, such as `https://www.zalando.co.uk/marchesa-occasion-wear-blush-m7g21c018-j11.html`.",
+            "description": "URLs to start with. The actor currently supports basic category URLs such as `'https://www.zalando.co.uk/womens-clothing/'`, URLs of their subcategories and also direct product URLs, such as `'https://www.zalando.co.uk/marchesa-occasion-wear-blush-m7g21c018-j11.html'`.",
             "editor": "stringList",
             "prefill": [
                 "https://www.zalando.co.uk/womens-clothing/",

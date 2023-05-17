@@ -27,6 +27,7 @@ const crawler = new CheerioCrawler({
         async (context: CheerioCrawlingContext) => {
             const { crawler: cheerioCrawler, log } = context;
             const state = await cheerioCrawler.useState<CrawleeState>();
+
             if (state.remainingItems <= 0) {
                 log.info('Reached max items limit, aborting the run');
                 await cheerioCrawler.autoscaledPool?.abort();
