@@ -16,7 +16,7 @@ export const categorizeUrls = (urls: string[]) : Request[] => {
     const categorizedRequests = urls.map((url) => {
         let label = LABELS.CATEGORY;
 
-        if (url.match(/\.html$/i)) {
+        if (url.match(/\.html/i)) {
             label = LABELS.DETAIL;
         }
 
