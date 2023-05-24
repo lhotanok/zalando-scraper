@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "7d31d5b9-dead-476e-8257-16cf53f5db4d",
+		"name": "Zalando",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19767069"
+	},
+	"item": [
+		{
+			"name": "Category Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.zalando.co.uk/women/",
+					"protocol": "https",
+					"host": [
+						"www",
+						"zalando",
+						"co",
+						"uk"
+					],
+					"path": [
+						"women",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product API",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "www.zalando.cz"
+					},
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "accept-language",
+						"value": "cs-CZ,cs;q=0.9"
+					},
+					{
+						"key": "cookie",
+						"value": "Zalando-Client-Id=63a18c2c-0860-4c6f-9dd3-37c5b8fac4c7; language-preference=cs; _gcl_au=1.1.497382626.1684167571; _ga=GA1.2.2144888669.1684167572; _gid=GA1.2.265168740.1684167572; bm_sz=D4AC10471E782B01CBE28A68FD03A959~YAAQDW7UF99bKh6IAQAArZ08IRPAkyqCjjGND469KjpPiqFclYMNGTWbAcFoqy3TzGtSGQ0ukLXigntRy8ejiJ27evWmSGbhmmhwUwekQSAy9dweg3OMk1kkAC2hac095uMF9RlC0s6cNLyvmYecjJ4JqSv76RY6b+BQdyZfxEZwlim5UgTxy0/z632Cq7L2O0eGwFHdNWW/380CtiyKWv3B+tk37h5Z87wOhgKEMM0DVBlESg+XKFH4A1KhbQ/6BwNsm+uPDqTe++B0wpxMANkPS7q+hX5tFp39rHlE/OLXEU8IGCmkDFhnybw+P3lphfOkHqfOdDph2gf6u0HzZ/KQBRqdp+vvsnC/zvkv1aWAM7bsR+m5sCfryFAvIrJRZygXWjf7ExGDYU7b1um3jA==~3485750~3748931; ncx=f; ak_bmsc=6927F4302C35A6E0D0141EE8A4BF4B23~000000000000000000000000000000~YAAQDW7UF49cKh6IAQAAGKY8IROUq/dIlb9GEIVNVIuiL3GyAnhIMZZ4R391lEebRHI+hDpQb2xGrl/R+DsP8GVbaW/x+TswGmSEUZ29DRCHrw6c06LD7fXLM7cyX/tPIimqDeVd3Vhx4+4syCSoQkhgrFzcs4webj3J5HLO0xBPJxVrQRXPmBcOgUhE0++3hVCUmtQ1MLouGT1a8dOXeoQwkdZDuwFYcq+NqpgxIqEpskrnV/snZVTJD1Vee8J6Evt1RF1op6ya/s583f4Pu17++cLVboRWY/5m8eFfR/OvY5mQRMFN+MxLAU7Xq5PaGtAqVorUeIXQ0f9iPleEeZdSeM9/D163Y+JbUpvt/2DLd6+5QZAEQ91dZB0/2OOQ/z2EMJRF6qzutqVn4ykMU7MPYgqThqbzmxNFuYsQTNy1Frl3t1CIYR4OfwQrVdcNrJBS86hdfj1YYhs5UpYXmTc5T4sPleyIXepXiA6CNpyt7gZ6pCDu8wsl; _fbp=fb.1.1684184804084.2009948420; mpulseinject=false; frsx=AAAAANC050G-pZLuJgzSIGF6oeUO97kUWTUOQNgEQ9Q9bIicBEx-wR11sMxuv0NRXS0bEWHEASv9dBHctpzgoCjTQrxkUngjeBOHLKgAVpa4Kv4H6U9cokctJNFm85iUp0jmYUdkEibYsHSVnfAXeg==; _abck=0699C987F3990A801D8D85629DD2B1CC~-1~YAAQZm7UF5w1KRuIAQAAFEp5IQmIrtuivw2H37YEliTjGZdZYOuruIXnA2ZmztHO3rjQVr57XldJKmd4xetlx4x1zvFxCN5O+s716hm08tM7lR4PVFSzcH1q0y/Dnquat3fnJiV4/ifH/uSE6KVG7BGXO0lgIoHFis0UAoRAnr1MphDKelhyaZccT5BFC7FpMr/veB5ym6u+ues8N/ERDW8Os2njwtG/Ll6Pu9lhSwhZM3r7wXHqNfTFtBUGSga/ctSlM/dg0gw7K/yjeG/g/Eke4nILXWc4Qg5oAxcQXvozJyby/Xo0tt+GY57GUbytwcIgIwHuYR/y4gG22uDCUTNZiGFnnP56RNnQ8Gekd3+9FNmA4tIWiN+5DnQCvauoAEFRMQL/pSmKfCsWOxzzVBjtsY9S9ar6D6tZkp5ameJsBnzK3xM40SjkXKWyx0yXkOodIvR/r4nBbTJEvCLJVJEu8ZABaHZZVVuaEDcxXoXj26yXFr4hLUsB14NjF3F4Z/SYrxTW1tvKs3Q=~-1~-1~-1; bm_sv=C77258B7DFCFF7FD07E92BE4D68BED93~YAAQZm7UF3g2KRuIAQAAHVB5IRPwXUaKrbs8DNjEVIE1yiBGkolesJTwUMYmgN/jMS2hnquY1S7qEUHo9SWZETCnf9dp+PlOa1StdrLxD9IgO2dqPMqXYB8pd0SPCZi3Fa8xnZ5OOyssK+MSZFeEr6iXlfcC01nOBWlp0tZvp9xCyGf6bzN4xAnq45qgQsKVnp8DiUjKHPpxePjxevKwPTPMIZwKJPDFT/mYtAaA7BzlSwmTpl5jBftURQDFwxzjwg==~1"
+					},
+					{
+						"key": "dpr",
+						"value": "1.25"
+					},
+					{
+						"key": "referer",
+						"value": "https://www.zalando.cz/marchesa-spolecenske-saty-blush-m7g21c018-j11.html"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "viewport-width",
+						"value": "1222"
+					},
+					{
+						"key": "x-xsrf-token",
+						"value": "AAAAANC050G-pZLuJgzSIGF6oeUO97kUWTUOQNgEQ9Q9bIicBEx-wR11sMxuv0NRXS0bEWHEASv9dBHctpzgoCjTQrxkUngjeBOHLKgAVpa4Kv4H6U9cokctJNFm85iUp0jmYUdkEibYsHSVnfAXeg=="
+					}
+				],
+				"url": {
+					"raw": "https://www.zalando.cz/api/rr/pr/sajax?flowId=YgaVP52sSOLg5H9l",
+					"protocol": "https",
+					"host": [
+						"www",
+						"zalando",
+						"cz"
+					],
+					"path": [
+						"api",
+						"rr",
+						"pr",
+						"sajax"
+					],
+					"query": [
+						{
+							"key": "flowId",
+							"value": "YgaVP52sSOLg5H9l",
+							"description": "Can be obtained from response header 'x-flow-id' of: https://www.zalando.cz/marchesa-spolecenske-saty-blush-m7g21c018-j11.html"
+						}
+					]
+				},
+				"description": "flowId parameter has quite short expiration period.\r\nIt can be obtained from response header 'x-flow-id' of the corresponding product page, in this example: https://www.zalando.cz/marchesa-spolecenske-saty-blush-m7g21c018-j11.html"
+			},
+			"response": []
+		},
+		{
+			"name": "Product Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.zalando.co.uk/guess-susanna-dress-day-dress-peach-fiore-gu121c1bn-k11.html",
+					"protocol": "https",
+					"host": [
+						"www",
+						"zalando",
+						"co",
+						"uk"
+					],
+					"path": [
+						"guess-susanna-dress-day-dress-peach-fiore-gu121c1bn-k11.html"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
