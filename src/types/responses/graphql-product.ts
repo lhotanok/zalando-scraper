@@ -4,7 +4,6 @@ export type GraphqlProductResponse = {
         type: 'app-download-banner';
         hints: string[];
     };
-    /** Fields holding GraphQL products need to include {@link PRODUCT_GRAPHQL_ID} as a substring. */
     graphqlCache: Record<string, GraphqlProductData>;
 };
 
