@@ -14,9 +14,9 @@ export const GRAPHQL_PRODUCT_DATA_SEL = 'script[data-re-asset][type="application
 // Check the up-to-date GraphQL IDs in case there's an error parsing the data
 
 export const SIMPLE_PRODUCT_GRAPHQL_ID = '16d2c8077be7112ec28bddc382e2c2461dd847a0e68e706fec85f2ecb4e3ab76';
-export const PRODUCT_IMAGES_GRAPHQL_ID = 'e2cfa194148cb788a9dcf7316fc1dc17fb41b0bf91fe04d7663710c5c9b93296';
+export const PRODUCT_IMAGES_GRAPHQL_ID = '3dd015bcefc841c545bd6075391dfdea659de84f8e9a9e91d79c677c5321423f';
 export const PRODUCT_ATTRIBUTES_GRAPHQL_ID = '41a2017cbd182380d0d7971e1befe9167e323f73b8e50bd6e964a38d0a26bfe4';
-export const GENERAL_PRODUCT_INFO_GRAPHQL_ID = '2b7cdd153b34a1e5cf632b05fa948a76d9ab4ebe054ba5ea29f1b7aca5f4857b';
+export const GENERAL_PRODUCT_INFO_GRAPHQL_ID = 'f4e67f9df66088acdc15daf9d655deafc7066c062e206fab792331a4c8f1ee7c';
 export const RATING_REVIEWS_GRAPHQL_ID = '75e4b894cc43c7caeb36d78a6b2a9da3fe834950075a9c79255f56acef3dbe7f';
 
 export const REVIEW_RATING_TO_NUMBER = {

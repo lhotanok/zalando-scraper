@@ -57,6 +57,7 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
     const productImages = parseRelevantGraphqlData(
         graphqlCache,
         PRODUCT_IMAGES_GRAPHQL_ID,
+        /galleryMedia/,
     )[0] as GraphqlProductImagesAndSimples;
 
     const { product } = productImages.data;
@@ -114,6 +115,7 @@ const parseGeneralProductInfo = (graphqlCache: Record<string, GraphqlProductData
     const productInfo = parseRelevantGraphqlData(
         graphqlCache,
         GENERAL_PRODUCT_INFO_GRAPHQL_ID,
+        /"hasSample":(true|false),"availabilityStatus"/,
     )[0] as GraphqlGeneralProductInfo;
 
     const {

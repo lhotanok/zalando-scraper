@@ -82,10 +82,15 @@ export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
 };
 
 export const parseRelevantGraphqlData = <DataType>(
-    graphqlCache: Record<string, DataType>, graphqlId: string,
+    graphqlCache: Record<string, DataType>,
+    graphqlId: string,
+    graphqlData?: RegExp,
 ) : DataType[] => {
     const data: DataType[] = Object.entries(graphqlCache)
-        .filter((entry) => entry[0].includes(graphqlId))
+        .filter(
+            (entry) => entry[0].includes(graphqlId)
+                || (graphqlData && JSON.stringify(entry[1]).match(graphqlData)),
+        )
         .map((entry) => entry[1]);
 
     return data;
