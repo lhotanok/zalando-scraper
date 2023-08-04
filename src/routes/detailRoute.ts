@@ -3,6 +3,7 @@ import { CheerioCrawlingContext } from 'crawlee';
 import {
     GENERAL_PRODUCT_INFO_GRAPHQL_ID,
     GRAPHQL_PRODUCT_DATA_SEL,
+    PRICE_CURRENCY_GRAPHQL_ID,
     PRODUCT_ATTRIBUTES_GRAPHQL_ID,
     PRODUCT_IMAGES_GRAPHQL_ID,
     RATING_REVIEWS_GRAPHQL_ID,
@@ -17,6 +18,7 @@ import {
     Attribute,
     GraphqlGeneralProductInfo,
     GraphqlRatingReviews,
+    GraphqlPriceCurrency,
 } from '../types/responses/graphql-product.js';
 import { CrawleeState } from '../types/crawlee-state.js';
 
@@ -35,6 +37,7 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
     const productSimpleInfo = parseImagesAndSimpleInfo(graphqlCache);
     const ratingReviews = parseRatingWithReviews(graphqlCache);
     const attributes = parseProductAttributes(graphqlCache);
+    const priceCurrency = parsePriceCurrency(graphqlCache);
 
     const state = await crawler.useState<CrawleeState>();
 
@@ -48,6 +51,7 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
         url,
         ...productSimpleInfo,
         ...ratingReviews,
+        priceCurrency,
         ...generalInfo,
         ...attributes,
     });
@@ -69,7 +73,12 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
 
     const thumbnail = product.galleryThumbnails[0].uri;
 
-    const { name, sku, brand, flags, comingSoon } = product;
+    const { name, sku, brand, comingSoon } = product;
+
+    const flags = product.flags.map((flag) => ({
+        ...flag,
+        formatted: flag.formatted.replace(/25$/, ''),
+    }));
 
     return { name, sku, brand, flags, comingSoon, thumbnail, images, videos };
 };
@@ -141,13 +150,24 @@ const parseGeneralProductInfo = (graphqlCache: Record<string, GraphqlProductData
     };
 };
 
+const parsePriceCurrency = (graphqlCache: Record<string, GraphqlProductData>) => {
+    const priceCurrency = parseRelevantGraphqlData(
+        graphqlCache,
+        PRICE_CURRENCY_GRAPHQL_ID,
+    )[0] as GraphqlPriceCurrency;
+
+    const { simples } = priceCurrency.data.product;
+
+    return simples[0] ? simples[0].offer.price.original.currency : null;
+};
+
 const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>) => {
     const ratingReviews = parseRelevantGraphqlData(
         graphqlCache,
         RATING_REVIEWS_GRAPHQL_ID,
     )[0] as GraphqlRatingReviews;
 
-    const { color, family, simples, displayPrice, category } = ratingReviews.data.product;
+    const { color, family, displayPrice, category } = ratingReviews.data.product;
     const { original: originalPrice, promotional: promotionalPrice } = displayPrice;
 
     const userReviews = family.reviews || { edges: [], totalCount: 0 };
@@ -176,7 +196,6 @@ const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>
         ratingHistogram: rating.distribution,
         reviews,
         color,
-        priceCurrency: simples[0] ? simples[0].offer.price.original.currency : null,
         formattedPrice: {
             original: originalPrice.formatted,
             current: promotionalPrice ? promotionalPrice.formatted : originalPrice.formatted,

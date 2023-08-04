@@ -10,7 +10,8 @@ export type GraphqlProductResponse = {
 export type GraphqlProductData = GraphqlProductImagesAndSimples
     | GraphqlProductAttributes
     | GraphqlGeneralProductInfo
-    | GraphqlRatingReviews;
+    | GraphqlRatingReviews
+    | GraphqlPriceCurrency;
 
 export type GraphqlProductImagesAndSimples = {
     data: {
@@ -166,6 +167,13 @@ export type GraphqlRatingReviews = {
                 };
             };
             category: string;
+        };
+    };
+};
+
+export type GraphqlPriceCurrency = {
+    data: {
+        product: {
             simples: {
                 size: string;
                 sku: string;
