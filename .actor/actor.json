@@ -25,7 +25,7 @@
 							"rating",
 							"ratingCount",
 							"reviewsCount",
-							"color.label",
+							"color.name",
 							"available",
 							"sizes",
                             "url"
@@ -59,7 +59,7 @@
 							"reviewsCount": {
 								"label": "Number of reviews"
 							},
-							"color.label": {
+							"color.name": {
 								"label": "Color",
 								"format": "text"
 							},
