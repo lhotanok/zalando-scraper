@@ -7,7 +7,7 @@ export const LABELS = {
 export const PRODUCT_LINK_SEL = '[data-card-type="media"][href]';
 export const GRAPHQL_PRODUCTS_DATA_SEL = 'script.re-data-el-hydrate';
 /** In the format such as: 'Page 1 of 428' */
-export const PAGES_COUNT_SEL = 'nav .KxHAYs._2kjxJ6.FxZV-M';
+export const PAGES_COUNT_SEL = 'nav span._2kjxJ6.FxZV-M';
 
 export const GRAPHQL_PRODUCT_DATA_SEL = 'script[data-re-asset][type="application/json"].re-1-15';
 
