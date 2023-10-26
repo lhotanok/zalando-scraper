@@ -10,7 +10,7 @@ export type GraphqlProductResponse = {
 export type GraphqlProductData = GraphqlProductImagesAndSimples
     | GraphqlProductAttributes
     | GraphqlGeneralProductInfo
-    | GraphqlRatingReviews
+    | GraphqlColorPriceCategory
     | GraphqlPriceCurrency;
 
 export type GraphqlProductImagesAndSimples = {
@@ -79,15 +79,6 @@ export type GraphqlGeneralProductInfo = {
             purchaseRestriction: {
                 isInviteOnlyPurchase: string | null;
             };
-            family: {
-                rating: null | {
-                    average: number;
-                    totalCount: number;
-                };
-                reviews: null | {
-                    totalCount: number;
-                };
-            },
             flags: {
                 type: string;
             }[];
@@ -129,28 +120,11 @@ export type Review = {
     };
 };
 
-export type GraphqlRatingReviews = {
+export type GraphqlColorPriceCategory = {
     data: {
         product: {
             id: string;
             sku: string;
-            family: {
-            reviews: null | {
-                edges: Review[];
-                totalCount: number;
-            };
-            rating: null | {
-                distribution: {
-                    rating1Count: number;
-                    rating3Count: number;
-                    rating2Count: number;
-                    rating4Count: number;
-                    rating5Count: number;
-                },
-                average: number;
-                totalCount: number;
-            };
-            };
             brand: {
                 name: string;
             };

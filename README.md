@@ -5,7 +5,7 @@ Let's explore one of the products to get a glimpse of the collected data:
 
 **🔗 Product URL**: [Product URL](https://www.zalando.co.uk/evenandodd-wrap-cardigan-cardigan-mottled-light-grey-ev421i0d2-c11.html)
 
-**👚 Product name**: Jumper - mottled light grey
+**👚 Product name**: Cardigan - mottled light grey
 
 **🆔 SKU**: EV421I0D2-C11
 
@@ -24,31 +24,6 @@ Let's explore one of the products to get a glimpse of the collected data:
 - **Neckline**: Cache-coeur
 - **Fastening**: Laces
 - **Pattern**: Marl
-
-**📊 Rating**:
-
-- Rating Count: 28
-- Reviews Count: 14
-- Average Rating: 4.36
-- Rating Histogram:
-  - ⭐⭐⭐⭐⭐: 18
-  - ⭐⭐⭐⭐: 6
-  - ⭐⭐⭐: 2
-  - ⭐⭐: 0
-  - ⭐: 2
-
-**👥 User Reviews**:
-
-- Astrid: ⭐⭐⭐⭐⭐ - "Love it. More like a jumper cardigan mix .. Great colour as well. Nice on high rise jeans."
-- Rose: ⭐⭐⭐⭐⭐ - "Just like the photo, great fit, great quality."
-- Giusi: ⭐⭐⭐ - "The jumper itself is nice but the durability is awful. Just wore it a couple of times and it looks already old and worn out."
-- Ana: ⭐⭐⭐ - "Short and the sleeves are short(ish). Great quality though."
-- Sophia: ⭐⭐⭐⭐ - "Love the colour, nice material. Comes up a tad small though."
-- Zalando customer: ⭐⭐⭐⭐⭐ - "Beautiful soft fabric. Sleeves could be slightly longer, only just fit."
-- Olivie: ⭐⭐⭐⭐⭐ - "Absolutely love this! True to its size. Adaptable because you can tie it however you like."
-- Vaiva: ⭐⭐⭐⭐⭐ - "Very soft and cozy! Really like it!"
-- Freville: ⭐⭐⭐⭐⭐ - "Perfect"
-- Zalando customer: ⭐⭐⭐⭐⭐
 
 This example showcases the data extracted from one specific product using Zalando Scraper. You can utilize the scraper to extract data for any product available on Zalando's website.
 

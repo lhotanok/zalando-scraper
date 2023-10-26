@@ -6,8 +6,7 @@ import {
     PRICE_CURRENCY_GRAPHQL_ID,
     PRODUCT_ATTRIBUTES_GRAPHQL_ID,
     PRODUCT_IMAGES_GRAPHQL_ID,
-    RATING_REVIEWS_GRAPHQL_ID,
-    REVIEW_RATING_TO_NUMBER,
+    COLOR_PRICE_CATEGORY_GRAPHQL_ID,
 } from '../constants.js';
 import { parseRelevantGraphqlData, tryParseReponse } from '../utils.js';
 import {
@@ -17,7 +16,7 @@ import {
     GraphqlProductAttributes,
     Attribute,
     GraphqlGeneralProductInfo,
-    GraphqlRatingReviews,
+    GraphqlColorPriceCategory,
     GraphqlPriceCurrency,
 } from '../types/responses/graphql-product.js';
 import { CrawleeState } from '../types/crawlee-state.js';
@@ -35,7 +34,7 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
 
     const generalInfo = parseGeneralProductInfo(graphqlCache);
     const productSimpleInfo = parseImagesAndSimpleInfo(graphqlCache);
-    const ratingReviews = parseRatingWithReviews(graphqlCache);
+    const colorPriceCategory = parseColorPriceCategory(graphqlCache);
     const attributes = parseProductAttributes(graphqlCache);
     const priceCurrency = parsePriceCurrency(graphqlCache);
 
@@ -50,7 +49,7 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
     await Actor.pushData({
         url,
         ...productSimpleInfo,
-        ...ratingReviews,
+        ...colorPriceCategory,
         priceCurrency,
         ...generalInfo,
         ...attributes,
@@ -161,40 +160,17 @@ const parsePriceCurrency = (graphqlCache: Record<string, GraphqlProductData>) =>
     return simples[0] ? simples[0].offer.price.original.currency : null;
 };
 
-const parseRatingWithReviews = (graphqlCache: Record<string, GraphqlProductData>) => {
+const parseColorPriceCategory = (graphqlCache: Record<string, GraphqlProductData>) => {
     const ratingReviews = parseRelevantGraphqlData(
         graphqlCache,
-        RATING_REVIEWS_GRAPHQL_ID,
-    )[0] as GraphqlRatingReviews;
+        COLOR_PRICE_CATEGORY_GRAPHQL_ID,
+    )[0] as GraphqlColorPriceCategory;
 
-    const { color, family, displayPrice, category } = ratingReviews.data.product;
+    const { color, displayPrice, category } = ratingReviews.data.product;
     const { original: originalPrice, promotional: promotionalPrice } = displayPrice;
-
-    const userReviews = family.reviews || { edges: [], totalCount: 0 };
-    const reviews = userReviews.edges.map((review) => ({
-        ...review.node,
-        rating: REVIEW_RATING_TO_NUMBER[review.node.rating],
-    }));
-
-    const rating = family.rating || {
-        totalCount: 0,
-        average: null,
-        distribution: {
-            rating1Count: 0,
-            rating2Count: 0,
-            rating3Count: 0,
-            rating4Count: 0,
-            rating5Count: 0,
-        },
-    };
 
     return {
         category,
-        reviewsCount: userReviews.totalCount,
-        ratingCount: rating.totalCount,
-        rating: rating.average,
-        ratingHistogram: rating.distribution,
-        reviews,
         color,
         formattedPrice: {
             original: originalPrice.formatted,

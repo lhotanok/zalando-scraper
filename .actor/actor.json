@@ -20,13 +20,12 @@
                             "thumbnail",
                             "name",
                             "sku",
-							"brand.name",
+                            "category",
+                            "color.name",
 							"formattedPrice.current",
-							"rating",
-							"ratingCount",
-							"reviewsCount",
-							"color.name",
-							"available",
+                            "brand.name",
+                            "brand.uri",
+                            "available",
 							"sizes",
                             "url"
                         ],
@@ -42,27 +41,22 @@
                             "thumbnail": {
                                 "format": "image"
                             },
-							"brand.name": {
-                                "label": "Brand",
-                                "format": "text"
-                            },
+                            "color.name": {
+								"label": "Color",
+								"format": "text"
+							},
 							"formattedPrice.current": {
                                 "label": "Current price",
                                 "format": "text"
                             },
-							"rating": {
-								"format": "number"
-							},
-							"ratingCount": {
-								"label": "Number of ratings"
-							},
-							"reviewsCount": {
-								"label": "Number of reviews"
-							},
-							"color.name": {
-								"label": "Color",
-								"format": "text"
-							},
+							"brand.name": {
+                                "label": "Brand",
+                                "format": "text"
+                            },
+                            "brand.uri": {
+                                "label": "Brand URL",
+                                "format": "link"
+                            },
                             "url": {
                                 "label": "URL",
                                 "format": "link"
