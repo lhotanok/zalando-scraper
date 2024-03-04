@@ -9,7 +9,7 @@ import {
     GRAPHQL_PRODUCTS_DATA_SEL,
     LABELS,
 } from './constants.js';
-import { GraphqlSimpleProductsResponse, GraphqlSimpleProduct } from './types/responses/graphql-simple-products.js';
+import { GraphqlSimpleProductsResponse } from './types/responses/graphql-simple-products.js';
 
 export const categorizeUrls = (urls: string[]) : Request[] => {
     const categorizedRequests = urls.map((url) => {
@@ -69,9 +69,8 @@ export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
     const dataJson = $(GRAPHQL_PRODUCTS_DATA_SEL).text();
     const productsResponse: GraphqlSimpleProductsResponse = tryParseReponse(dataJson, url);
 
-    const products = productsResponse.graphqlCache as Record<string, GraphqlSimpleProduct>;
-
-    const urls = Object.values(products).map((product) => product?.data?.product?.uri || '')
+    const urls = Object.values(productsResponse.graphqlCache)
+        .map((product) => product?.data?.product?.uri || '')
         .filter((productUrl) => !productUrl.match(/\/outfits\//i));
 
     return urls;

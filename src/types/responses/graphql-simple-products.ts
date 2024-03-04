@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { SIMPLE_PRODUCT_GRAPHQL_ID } from '../../constants.js';
-
 export type GraphqlSimpleProductsResponse = {
     enrichedEntity: {
         id: string;
@@ -8,7 +5,6 @@ export type GraphqlSimpleProductsResponse = {
         hints: string[];
         rawExternalData: string;
     };
-    /** Fields holding GraphQL products need to include {@link SIMPLE_PRODUCT_GRAPHQL_ID} as a substring. */
     graphqlCache: Record<string, GraphqlSimpleProduct>;
 };
 
