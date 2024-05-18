@@ -32,6 +32,8 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
 
     const { graphqlCache } = productResponse;
 
+    // await Actor.setValue('graphqlCache', graphqlCache);
+
     const generalInfo = parseGeneralProductInfo(graphqlCache);
     const productSimpleInfo = parseImagesAndSimpleInfo(graphqlCache);
     const colorPriceCategory = parseColorPriceCategory(graphqlCache);
