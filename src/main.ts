@@ -46,4 +46,11 @@ await crawler.run(
     categorizeUrls(startUrls),
 );
 
+const { remainingItems } = await crawler.useState<CrawleeState>();
+
+// A run with no items fails, so a Zalando layout change shows up as a failed run
+if (maxItems > 0 && remainingItems === maxItems) {
+    await Actor.fail('No products found. If your start URLs list products on Zalando, its page layout may have changed (see failed pages in the log).');
+}
+
 await Actor.exit();

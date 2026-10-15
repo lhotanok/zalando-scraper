@@ -7,10 +7,14 @@ import {
     PRODUCT_ATTRIBUTES_GRAPHQL_ID,
     PRODUCT_IMAGES_GRAPHQL_ID,
     COLOR_PRICE_CATEGORY_GRAPHQL_ID,
+    PRODUCT_IMAGES_DATA_REGEX,
+    PRODUCT_ATTRIBUTES_DATA_REGEX,
+    GENERAL_PRODUCT_INFO_DATA_REGEX,
+    COLOR_PRICE_CATEGORY_DATA_REGEX,
+    PRICE_CURRENCY_DATA_REGEX,
 } from '../constants.js';
-import { parseRelevantGraphqlData, tryParseReponse } from '../utils.js';
+import { parseGraphqlCache, parseRelevantGraphqlData } from '../utils.js';
 import {
-    GraphqlProductResponse,
     GraphqlProductImagesAndSimples,
     GraphqlProductData,
     GraphqlProductAttributes,
@@ -27,10 +31,7 @@ export const detailRoute = async (context: CheerioCrawlingContext) => {
     const title = $('head title').text();
     log.info(`${title}`, { url });
 
-    const dataJson = $(GRAPHQL_PRODUCT_DATA_SEL).text();
-    const productResponse: GraphqlProductResponse = tryParseReponse(dataJson, url);
-
-    const { graphqlCache } = productResponse;
+    const graphqlCache = parseGraphqlCache<GraphqlProductData>($, GRAPHQL_PRODUCT_DATA_SEL, url);
 
     // await Actor.setValue('graphqlCache', graphqlCache);
 
@@ -62,17 +63,19 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
     const productImages = parseRelevantGraphqlData(
         graphqlCache,
         PRODUCT_IMAGES_GRAPHQL_ID,
-        /galleryMedia/,
+        PRODUCT_IMAGES_DATA_REGEX,
     )[0] as GraphqlProductImagesAndSimples;
 
     const { product } = productImages.data;
 
-    const gallery = product.galleryMedia.map((media) => media.uri.replace(/\?.+$/, ''));
+    const gallery = product.gallery.map(({ galleryMedia }) => galleryMedia.uri.replace(/\?.+$/, ''));
 
-    const images = gallery.filter((url) => !url.match(/\.(mp4|avi)/));
-    const videos = gallery.filter((url) => url.match(/\.(mp4|avi)/));
+    const images = gallery.filter((url) => !url.match(/\.(mp4|avi|m3u8)/));
+    const videos = gallery.filter((url) => url.match(/\.(mp4|avi|m3u8)/));
 
-    const thumbnail = product.galleryThumbnails[0].uri;
+    const thumbnail = product.gallery
+        // eslint-disable-next-line no-underscore-dangle
+        .find(({ galleryThumbnails }) => galleryThumbnails.__typename === 'Image')?.galleryThumbnails.uri;
 
     const { name, sku, brand, comingSoon } = product;
 
@@ -84,10 +87,19 @@ const parseImagesAndSimpleInfo = (graphqlCache: Record<string, GraphqlProductDat
     return { name, sku, brand, flags, comingSoon, thumbnail, images, videos };
 };
 
+/** Values are no longer always URI encoded, such as '64% cotton' */
+const tryDecodeURIComponent = (value: string) => {
+    try {
+        return decodeURIComponent(value);
+    } catch {
+        return String(value);
+    }
+};
+
 const parseAttributes = (attributes: Attribute[]) => {
     return attributes.map((attribute) => ({
         key: attribute.key,
-        value: decodeURIComponent(attribute.value).replace(/^undefined$/i, ''),
+        value: tryDecodeURIComponent(attribute.value).replace(/^undefined$/i, ''),
     })).filter((attribute) => attribute.value);
 };
 
@@ -95,6 +107,7 @@ const parseProductAttributes = (graphqlCache: Record<string, GraphqlProductData>
     const productAttributes = parseRelevantGraphqlData(
         graphqlCache,
         PRODUCT_ATTRIBUTES_GRAPHQL_ID,
+        PRODUCT_ATTRIBUTES_DATA_REGEX,
     )[0] as GraphqlProductAttributes;
 
     const { product: { condition, attributeSuperClusters } } = productAttributes.data;
@@ -106,7 +119,7 @@ const parseProductAttributes = (graphqlCache: Record<string, GraphqlProductData>
         }[] = [];
 
         superCluster.clusters.forEach((cluster) => {
-            attributes.push(...parseAttributes(cluster.attributes));
+            attributes.push(...parseAttributes(cluster.attributes ?? []));
         });
 
         return {
@@ -125,7 +138,7 @@ const parseGeneralProductInfo = (graphqlCache: Record<string, GraphqlProductData
     const productInfo = parseRelevantGraphqlData(
         graphqlCache,
         GENERAL_PRODUCT_INFO_GRAPHQL_ID,
-        /"hasSample":(true|false),"availabilityStatus"/,
+        GENERAL_PRODUCT_INFO_DATA_REGEX,
     )[0] as GraphqlGeneralProductInfo;
 
     const {
@@ -155,9 +168,10 @@ const parsePriceCurrency = (graphqlCache: Record<string, GraphqlProductData>) =>
     const priceCurrency = parseRelevantGraphqlData(
         graphqlCache,
         PRICE_CURRENCY_GRAPHQL_ID,
-    )[0] as GraphqlPriceCurrency;
+        PRICE_CURRENCY_DATA_REGEX,
+    )[0] as GraphqlPriceCurrency | undefined;
 
-    const { simples } = priceCurrency.data.product;
+    const simples = priceCurrency?.data.product.simples ?? [];
 
     return simples[0] ? simples[0].offer.price.original.currency : null;
 };
@@ -166,6 +180,7 @@ const parseColorPriceCategory = (graphqlCache: Record<string, GraphqlProductData
     const ratingReviews = parseRelevantGraphqlData(
         graphqlCache,
         COLOR_PRICE_CATEGORY_GRAPHQL_ID,
+        COLOR_PRICE_CATEGORY_DATA_REGEX,
     )[0] as GraphqlColorPriceCategory;
 
     const { color, displayPrice, category } = ratingReviews.data.product;
