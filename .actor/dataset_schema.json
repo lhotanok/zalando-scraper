@@ -5,42 +5,42 @@
         "type": "object",
         "properties": {
             "url": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "Product URL",
                 "description": "Product page on Zalando that the data was read from.",
                 "example": "https://www.zalando.co.uk/anna-field-jersey-dress-coral-option-an621c1xr-g11.html"
             },
             "name": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "Name",
                 "description": "Product name with its category and color, as shown on Zalando.",
                 "example": "Jersey dress - coral option"
             },
             "sku": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "SKU",
                 "description": "Zalando's product code, shared by all sizes. Each size has its own SKU in `sizes`.",
                 "example": "AN621C1XR-G11"
             },
             "brand": {
-                "type": "object",
+                "type": ["object", "null"],
                 "title": "Brand",
                 "description": "Brand name and the link to its page on Zalando.",
                 "properties": {
-                    "name": { "type": "string" },
-                    "uri": { "type": "string" }
+                    "name": { "type": ["string", "null"] },
+                    "uri": { "type": ["string", "null"] }
                 },
                 "example": { "name": "Anna Field by Zalando", "uri": "https://www.zalando.co.uk/anna-field/" }
             },
             "flags": {
-                "type": "array",
+                "type": ["array", "null"],
                 "title": "Flags",
                 "description": "Labels shown on the product, such as `New`, `Top rated` or a discount like `-27%`. `kind` holds the label type, such as `NEW`, `DEAL` or `TOP_RATED`.",
                 "items": {
-                    "type": "object",
+                    "type": ["object", "null"],
                     "properties": {
-                        "formatted": { "type": "string" },
-                        "kind": { "type": "string" },
+                        "formatted": { "type": ["string", "null"] },
+                        "kind": { "type": ["string", "null"] },
                         "info": { "type": ["string", "null"] }
                     }
                 },
@@ -53,17 +53,17 @@
                 "example": "https://img01.ztat.net/article/spp-media-p1/7358bc216f7c40619be7294e9df07f55/1586540b69234154b9c13f0a341eb349.jpg?imwidth=156"
             },
             "images": {
-                "type": "array",
+                "type": ["array", "null"],
                 "title": "Images",
                 "description": "Full-size product images.",
-                "items": { "type": "string" },
+                "items": { "type": ["string", "null"] },
                 "example": ["https://img01.ztat.net/article/spp-media-p1/7358bc216f7c40619be7294e9df07f55/1586540b69234154b9c13f0a341eb349.jpg"]
             },
             "videos": {
-                "type": "array",
+                "type": ["array", "null"],
                 "title": "Videos",
                 "description": "Product videos as HLS (`.m3u8`) or MP4 links. Empty if the product has no video.",
-                "items": { "type": "string" },
+                "items": { "type": ["string", "null"] },
                 "example": ["https://video01.ztat.net/b53eb71b-3425-4b38-9961-ebc2dcdbac4b/cmaf/e02ec503990e495094908f5329e31f6c.m3u8"]
             },
             "category": {
@@ -77,18 +77,18 @@
                 "title": "Color",
                 "description": "`name` is the full color as shown on Zalando, `label` the main color.",
                 "properties": {
-                    "name": { "type": "string" },
-                    "label": { "type": "string" }
+                    "name": { "type": ["string", "null"] },
+                    "label": { "type": ["string", "null"] }
                 },
                 "example": { "name": "coral option", "label": "coral" }
             },
             "formattedPrice": {
-                "type": "object",
+                "type": ["object", "null"],
                 "title": "Formatted price",
                 "description": "Prices as shown on Zalando, with the currency symbol. `current` is the discounted price if there is one, otherwise the original. `promotional` is null without a discount.",
                 "properties": {
-                    "original": { "type": "string" },
-                    "current": { "type": "string" },
+                    "original": { "type": ["string", "null"] },
+                    "current": { "type": ["string", "null"] },
                     "promotional": { "type": ["string", "null"] }
                 },
                 "example": { "original": "£33.99", "current": "£31.00", "promotional": "£31.00" }
@@ -100,7 +100,7 @@
                 "example": "GBP"
             },
             "price": {
-                "type": "object",
+                "type": ["object", "null"],
                 "title": "Price",
                 "description": "Prices as numbers in `priceCurrency`. `current` is the discounted price if there is one, otherwise the original. `promotional` is null without a discount.",
                 "properties": {
@@ -111,21 +111,21 @@
                 "example": { "original": 33.99, "current": 31, "promotional": 31 }
             },
             "sizes": {
-                "type": "array",
+                "type": ["array", "null"],
                 "title": "Sizes",
                 "description": "Every size with its SKU and stock status: `MANY`, `TWO`, `ONE` or `OUT_OF_STOCK`.",
                 "items": {
-                    "type": "object",
+                    "type": ["object", "null"],
                     "properties": {
-                        "size": { "type": "string" },
-                        "sku": { "type": "string" },
-                        "stockStatus": { "type": "string" }
+                        "size": { "type": ["string", "null"] },
+                        "sku": { "type": ["string", "null"] },
+                        "stockStatus": { "type": ["string", "null"] }
                     }
                 },
                 "example": [{ "size": "XS", "sku": "AN621C1XR-G1100XS000", "stockStatus": "ONE" }, { "size": "S", "sku": "AN621C1XR-G11000S000", "stockStatus": "MANY" }]
             },
             "available": {
-                "type": "boolean",
+                "type": ["boolean", "null"],
                 "title": "Available",
                 "description": "True if Zalando lists the product as available to order.",
                 "example": true
@@ -149,21 +149,21 @@
                 "example": null
             },
             "attributeCategories": {
-                "type": "array",
+                "type": ["array", "null"],
                 "title": "Attributes",
                 "description": "Product details grouped as on Zalando, such as `material_care`, `details` and `size_fit`, each with key-value attributes.",
                 "items": {
-                    "type": "object",
+                    "type": ["object", "null"],
                     "properties": {
-                        "categoryId": { "type": "string" },
+                        "categoryId": { "type": ["string", "null"] },
                         "categoryName": { "type": ["string", "null"] },
                         "attributes": {
-                            "type": "array",
+                            "type": ["array", "null"],
                             "items": {
-                                "type": "object",
+                                "type": ["object", "null"],
                                 "properties": {
-                                    "key": { "type": "string" },
-                                    "value": { "type": "string" }
+                                    "key": { "type": ["string", "null"] },
+                                    "value": { "type": ["string", "null"] }
                                 }
                             }
                         }
@@ -175,8 +175,7 @@
                     "attributes": [{ "key": "Outer fabric material", "value": "98% polyester, 2% elastane" }, { "key": "Fabric", "value": "Jersey" }]
                 }]
             }
-        },
-        "required": ["url", "name", "sku", "brand", "flags", "images", "videos", "formattedPrice", "price", "sizes", "available", "attributeCategories"]
+        }
     },
     "views": {
         "overview": {
