@@ -73,6 +73,8 @@ export const enqueueProductDetails = async (
 
     const enqueueLinksOptions: EnqueueLinksOptions = {
         selector,
+        // zalando.de redirects to en.zalando.de, product links are on the subdomain
+        strategy: 'same-domain',
         exclude: [/\/outfits\//i],
         label: LABELS.DETAIL,
         forefront: true,
