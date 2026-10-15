@@ -2,9 +2,8 @@ import { CheerioCrawlingContext, CheerioRoot } from 'crawlee';
 import {
     LABELS,
     PAGES_COUNT_SEL,
-    PRODUCT_LINK_SEL,
 } from '../constants.js';
-import { enqueueProductDetails, parseGraphqlProductUrls } from '../utils.js';
+import { enqueuePageProducts } from '../utils.js';
 
 export const categoryRoute = async (context: CheerioCrawlingContext) => {
     const { log, $, request: { url } } = context;
@@ -12,10 +11,8 @@ export const categoryRoute = async (context: CheerioCrawlingContext) => {
     const pageTitle = $('head title').text();
     log.info(`Opened category page: ${pageTitle}`, { url });
 
-    const graphqlProductUrls = parseGraphqlProductUrls($, url);
-
-    await enqueueProductDetails({ context, urls: graphqlProductUrls, source: 'API' });
-    await enqueueProductDetails({ context, selector: PRODUCT_LINK_SEL, source: 'cards' });
+    // Throws before the next pages are queued, so an unparsable category doesn't crawl them all
+    await enqueuePageProducts(context);
 
     await enqueueNextPages(context);
 };

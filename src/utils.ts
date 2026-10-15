@@ -8,6 +8,7 @@ import {
 import {
     GRAPHQL_PRODUCTS_DATA_SEL,
     LABELS,
+    PRODUCT_LINK_SEL,
 } from './constants.js';
 import { GraphqlSimpleProduct } from './types/responses/graphql-simple-products.js';
 
@@ -88,6 +89,8 @@ export const enqueueProductDetails = async (
 
     const enqueuedReqs = reqs.filter((req) => !req.wasAlreadyPresent);
     log.info(`Enqueued ${enqueuedReqs.length} product detail pages from product ${source}`, { url });
+
+    return reqs.length;
 };
 
 export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
@@ -98,6 +101,20 @@ export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
         .filter((productUrl) => productUrl && !productUrl.match(/\/outfits\//i));
 
     return urls;
+};
+
+/** Throws when a listing page has no product links, so a changed layout fails the request */
+export const enqueuePageProducts = async (context: CheerioCrawlingContext) => {
+    const { $, request: { url } } = context;
+
+    const graphqlProductUrls = parseGraphqlProductUrls($, url);
+
+    const apiProductsCount = await enqueueProductDetails({ context, urls: graphqlProductUrls, source: 'API' });
+    const cardProductsCount = await enqueueProductDetails({ context, selector: PRODUCT_LINK_SEL, source: 'cards' });
+
+    if (apiProductsCount + cardProductsCount === 0) {
+        throw new Error('No products found on the page, Zalando may have changed its layout');
+    }
 };
 
 export const parseRelevantGraphqlData = <DataType>(
