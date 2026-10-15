@@ -75,9 +75,13 @@ const getCurrentPage = (url: string): number => {
 const parseTotalPagesCount = ($: CheerioRoot, currentPage: number) : number => {
     const replaceCurrentPageRegex = new RegExp(` ${currentPage} `);
 
-    const pagesCountText = $(PAGES_COUNT_SEL).text()
-        .replace(replaceCurrentPageRegex, '')
-        .replace(/[^\d]+/g, '');
+    // Text with exactly two numbers, such as 'Page 1 of 428'
+    const pagesCountText = $(PAGES_COUNT_SEL).toArray()
+        .map((span) => $(span).text().trim())
+        .find((text) => /^\D*\d+\D+[\d,.]+$/.test(text)) || '';
 
-    return parseInt(pagesCountText, 10);
+    return parseInt(
+        pagesCountText.replace(replaceCurrentPageRegex, '').replace(/[^\d]+/g, ''),
+        10,
+    );
 };

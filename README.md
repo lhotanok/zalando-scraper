@@ -39,7 +39,6 @@ Check out a full output for [Cardigan - mottled light grey](https://www.zalando.
     "uri": "https://www.zalando.co.uk/even-odd/"
   },
   "flags": [],
-  "comingSoon": false,
   "thumbnail": "https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg?imwidth=156&filter=packshot",
   "images": [
     "https://img01.ztat.net/article/spp-media-p1/bf87feefa11e3580a023866b3d6584cb/a371932409b84fd0b1d2add290c5264b.jpg",

@@ -9,7 +9,7 @@ import {
     GRAPHQL_PRODUCTS_DATA_SEL,
     LABELS,
 } from './constants.js';
-import { GraphqlSimpleProductsResponse } from './types/responses/graphql-simple-products.js';
+import { GraphqlSimpleProduct } from './types/responses/graphql-simple-products.js';
 
 export const categorizeUrls = (urls: string[]) : Request[] => {
     const categorizedRequests = urls.map((url) => {
@@ -35,6 +35,29 @@ export const tryParseReponse = <ResponseType>(responseJson: string, infoUrl?: st
         log.debug((err as Error).message, { url: infoUrl });
         throw new Error(`Response could not be parsed`);
     }
+};
+
+/** Unwraps the JSON argument of scripts like `window.__hydrationDataConsume({...})` */
+export const unwrapScriptJson = (scriptText: string) : string => {
+    const wrappedJson = scriptText.match(/\((\{"[\s\S]*?\})\);?(?:\s*\}\);?)?\s*$/);
+
+    return wrappedJson ? wrappedJson[1] : scriptText;
+};
+
+/** Merges GraphQL caches from all scripts matching the selector */
+export const parseGraphqlCache = <DataType>($: CheerioRoot, selector: string, url: string) => {
+    const graphqlCache: Record<string, DataType> = {};
+
+    $(selector).each((_i, script) => {
+        const response: { graphqlCache?: Record<string, DataType>, cache?: Record<string, DataType> } = tryParseReponse(
+            unwrapScriptJson($(script).text()),
+            url,
+        );
+
+        Object.assign(graphqlCache, response.graphqlCache ?? response.cache);
+    });
+
+    return graphqlCache;
 };
 
 export const enqueueProductDetails = async (
@@ -66,12 +89,11 @@ export const enqueueProductDetails = async (
 };
 
 export const parseGraphqlProductUrls = ($: CheerioRoot, url: string) => {
-    const dataJson = $(GRAPHQL_PRODUCTS_DATA_SEL).text();
-    const productsResponse: GraphqlSimpleProductsResponse = tryParseReponse(dataJson, url);
+    const graphqlCache = parseGraphqlCache<GraphqlSimpleProduct>($, GRAPHQL_PRODUCTS_DATA_SEL, url);
 
-    const urls = Object.values(productsResponse.graphqlCache)
+    const urls = Object.values(graphqlCache)
         .map((product) => product?.data?.product?.uri || '')
-        .filter((productUrl) => !productUrl.match(/\/outfits\//i));
+        .filter((productUrl) => productUrl && !productUrl.match(/\/outfits\//i));
 
     return urls;
 };
@@ -81,12 +103,13 @@ export const parseRelevantGraphqlData = <DataType>(
     graphqlId: string,
     graphqlData?: RegExp,
 ) : DataType[] => {
-    const data: DataType[] = Object.entries(graphqlCache)
-        .filter(
-            (entry) => entry[0].includes(graphqlId)
-                || (graphqlData && JSON.stringify(entry[1]).match(graphqlData)),
-        )
-        .map((entry) => entry[1]);
+    const entries = Object.entries(graphqlCache);
+    const entriesById = entries.filter((entry) => entry[0].includes(graphqlId));
+
+    const data: DataType[] = (entriesById.length > 0 || !graphqlData
+        ? entriesById
+        : entries.filter((entry) => JSON.stringify(entry[1]).match(graphqlData))
+    ).map((entry) => entry[1]);
 
     return data;
 };

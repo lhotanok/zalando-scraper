@@ -13,6 +13,11 @@ export type GraphqlProductData = GraphqlProductImagesAndSimples
     | GraphqlColorPriceCategory
     | GraphqlPriceCurrency;
 
+export type GalleryMedia = {
+    __typename: 'Image' | 'VideoStream';
+    uri: string;
+};
+
 export type GraphqlProductImagesAndSimples = {
     data: {
         product: {
@@ -20,7 +25,7 @@ export type GraphqlProductImagesAndSimples = {
             name: string;
             sku: string;
             uri: string;
-            comingSoon: boolean;
+            comingSoon?: boolean;
             brand: {
                 name: string;
                 uri: string;
@@ -30,13 +35,9 @@ export type GraphqlProductImagesAndSimples = {
                 kind: string;
                 info: string | null;
             }[];
-            galleryThumbnails: {
-                __typename: 'Image';
-                uri: string;
-            }[];
-            galleryMedia: {
-                __typename: 'Image';
-                uri: string;
+            gallery: {
+                galleryThumbnails: GalleryMedia;
+                galleryMedia: GalleryMedia;
             }[];
             simplesWithStock: {
                 sku: string;
