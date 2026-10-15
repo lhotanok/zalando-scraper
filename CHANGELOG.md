@@ -1,5 +1,9 @@
 # 2026-10-15
 
+*Features*
+
+- Added an output schema and descriptions of the dataset fields
+
 *Fixes*
 
 - Read products from Zalando's new page data, so runs return items again instead of none
