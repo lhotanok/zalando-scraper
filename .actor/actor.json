@@ -8,63 +8,9 @@
 		"templateId": "ts-crawlee-cheerio"
 	},
 	"input": "./input_schema.json",
+	"output": "./output_schema.json",
 	"dockerfile": "./Dockerfile",
 	"storages": {
-        "dataset": {
-            "actorSpecification": 1,
-            "views": {
-                "overview": {
-                    "title": "Overview",
-                    "transformation": {
-                        "fields": [
-                            "thumbnail",
-                            "name",
-                            "sku",
-                            "category",
-                            "color.name",
-							"formattedPrice.current",
-                            "brand.name",
-                            "brand.uri",
-                            "available",
-							"sizes",
-                            "url"
-                        ],
-                        "flatten": [
-							"brand",
-							"formattedPrice",
-							"color"
-                        ]
-                    },
-                    "display": {
-                        "component": "table",
-                        "properties": {
-                            "thumbnail": {
-                                "format": "image"
-                            },
-                            "color.name": {
-								"label": "Color",
-								"format": "text"
-							},
-							"formattedPrice.current": {
-                                "label": "Current price",
-                                "format": "text"
-                            },
-							"brand.name": {
-                                "label": "Brand",
-                                "format": "text"
-                            },
-                            "brand.uri": {
-                                "label": "Brand URL",
-                                "format": "link"
-                            },
-                            "url": {
-                                "label": "URL",
-                                "format": "link"
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+		"dataset": "./dataset_schema.json"
+	}
 }

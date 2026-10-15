@@ -1,0 +1,228 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+            "url": {
+                "type": "string",
+                "title": "Product URL",
+                "description": "Product page on Zalando that the data was read from.",
+                "example": "https://www.zalando.co.uk/adidas-originals-spacer-pant-tracksuit-bottoms-blackblack-reflectivenight-grey-ad121a1nj-q11.html"
+            },
+            "name": {
+                "type": "string",
+                "title": "Name",
+                "description": "Product name with its category and color, as shown on Zalando.",
+                "example": "SPACER PANT - Tracksuit bottoms - black/black reflective/night grey"
+            },
+            "sku": {
+                "type": "string",
+                "title": "SKU",
+                "description": "Zalando's product code, shared by all sizes. Each size has its own SKU in `sizes`.",
+                "example": "AD121A1NJ-Q11"
+            },
+            "brand": {
+                "type": "object",
+                "title": "Brand",
+                "description": "Brand name and the link to its page on Zalando.",
+                "properties": {
+                    "name": { "type": "string" },
+                    "uri": { "type": "string" }
+                },
+                "example": { "name": "adidas Originals", "uri": "https://www.zalando.co.uk/adidas-originals/" }
+            },
+            "flags": {
+                "type": "array",
+                "title": "Flags",
+                "description": "Labels shown on the product, such as `New`, `Top rated` or a discount like `-27%`. `kind` holds the label type, such as `NEW`, `DEAL` or `TOP_RATED`.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "formatted": { "type": "string" },
+                        "kind": { "type": "string" },
+                        "info": { "type": ["string", "null"] }
+                    }
+                },
+                "example": [{ "formatted": "up to -10%", "kind": "DEAL", "info": null }]
+            },
+            "thumbnail": {
+                "type": ["string", "null"],
+                "title": "Thumbnail",
+                "description": "Small product image, 156 px wide. Missing if the gallery has no image.",
+                "example": "https://img01.ztat.net/article/spp-media-p1/a84627d147e840cbb8918763d8010aae/ed52960dd2e4430f98dc2298e862e0e2.jpg?imwidth=156"
+            },
+            "images": {
+                "type": "array",
+                "title": "Images",
+                "description": "Full-size product images.",
+                "items": { "type": "string" },
+                "example": ["https://img01.ztat.net/article/spp-media-p1/a84627d147e840cbb8918763d8010aae/ed52960dd2e4430f98dc2298e862e0e2.jpg"]
+            },
+            "videos": {
+                "type": "array",
+                "title": "Videos",
+                "description": "Product videos as HLS (`.m3u8`) or MP4 links. Empty if the product has no video.",
+                "items": { "type": "string" },
+                "example": ["https://video01.ztat.net/ee8188c8-1a85-45a1-b55d-466089046d8e/cmaf/2494e81629494044b81c301c76bb608c.m3u8"]
+            },
+            "category": {
+                "type": ["string", "null"],
+                "title": "Category",
+                "description": "Product type, such as `Jumper` or `Tracksuit bottoms`.",
+                "example": "Tracksuit bottoms"
+            },
+            "color": {
+                "type": ["object", "null"],
+                "title": "Color",
+                "description": "`name` is the full color as shown on Zalando, `label` the main color.",
+                "properties": {
+                    "name": { "type": "string" },
+                    "label": { "type": "string" }
+                },
+                "example": { "name": "black/black reflective/night grey", "label": "black" }
+            },
+            "formattedPrice": {
+                "type": "object",
+                "title": "Formatted price",
+                "description": "Prices as shown on Zalando, with the currency symbol. `current` is the discounted price if there is one, otherwise the original. `promotional` is null without a discount.",
+                "properties": {
+                    "original": { "type": "string" },
+                    "current": { "type": "string" },
+                    "promotional": { "type": ["string", "null"] }
+                },
+                "example": { "original": "£59.99", "current": "£54.00", "promotional": "£54.00" }
+            },
+            "priceCurrency": {
+                "type": ["string", "null"],
+                "title": "Currency",
+                "description": "Currency of `price` as an ISO 4217 code, such as `GBP` or `EUR`. Null if Zalando lists no size offers.",
+                "example": "GBP"
+            },
+            "price": {
+                "type": "object",
+                "title": "Price",
+                "description": "Prices as numbers in `priceCurrency`. `current` is the discounted price if there is one, otherwise the original. `promotional` is null without a discount.",
+                "properties": {
+                    "original": { "type": ["number", "null"] },
+                    "current": { "type": ["number", "null"] },
+                    "promotional": { "type": ["number", "null"] }
+                },
+                "example": { "original": 59.99, "current": 54, "promotional": 54 }
+            },
+            "sizes": {
+                "type": "array",
+                "title": "Sizes",
+                "description": "Every size with its SKU and stock status: `MANY`, `TWO`, `ONE` or `OUT_OF_STOCK`.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "size": { "type": "string" },
+                        "sku": { "type": "string" },
+                        "stockStatus": { "type": "string" }
+                    }
+                },
+                "example": [{ "size": "4/6 (XS)", "sku": "AD121A1NJ-Q1100XS000", "stockStatus": "MANY" }]
+            },
+            "available": {
+                "type": "boolean",
+                "title": "Available",
+                "description": "True if Zalando lists the product as available to order.",
+                "example": true
+            },
+            "sizeAdvice": {
+                "type": ["string", "null"],
+                "title": "Size advice",
+                "description": "Zalando's fit advice: `SMALLER_SIZE` or `LARGER_SIZE` to order a size down or up, `USUAL_SIZE` if it fits as usual. Null if there is no advice.",
+                "example": "SMALLER_SIZE"
+            },
+            "navigationTargetGroup": {
+                "type": ["string", "null"],
+                "title": "Target group",
+                "description": "Shop section the product belongs to, such as `WOMEN` or `ALL`.",
+                "example": "WOMEN"
+            },
+            "condition": {
+                "type": ["object", "null"],
+                "title": "Condition",
+                "description": "Product condition, such as `{\"kind\": \"NEW\"}`. Null for most products.",
+                "example": null
+            },
+            "attributeCategories": {
+                "type": "array",
+                "title": "Attributes",
+                "description": "Product details grouped as on Zalando, such as `material_care`, `details` and `size_fit`, each with key-value attributes.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "categoryId": { "type": "string" },
+                        "categoryName": { "type": ["string", "null"] },
+                        "attributes": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "key": { "type": "string" },
+                                    "value": { "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                },
+                "example": [{
+                    "categoryId": "material_care",
+                    "categoryName": "Material & care",
+                    "attributes": [{ "key": "Outer fabric material", "value": "53% cotton, 47% polyester" }]
+                }]
+            }
+        },
+        "required": ["url", "name", "sku", "brand", "flags", "images", "videos", "formattedPrice", "price", "sizes", "available", "attributeCategories"]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "thumbnail",
+                    "name",
+                    "brand.name",
+                    "formattedPrice.current",
+                    "formattedPrice.original",
+                    "category",
+                    "color.name",
+                    "available",
+                    "url"
+                ],
+                "flatten": [
+                    "brand",
+                    "formattedPrice",
+                    "color"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "thumbnail": {
+                        "format": "image"
+                    },
+                    "brand.name": {
+                        "label": "Brand"
+                    },
+                    "formattedPrice.current": {
+                        "label": "Price"
+                    },
+                    "formattedPrice.original": {
+                        "label": "Original price"
+                    },
+                    "color.name": {
+                        "label": "Color"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    }
+                }
+            }
+        }
+    }
+}

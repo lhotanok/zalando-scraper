@@ -1,0 +1,12 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Zalando Scraper output",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Products",
+            "description": "Products found from the start URLs, one item per product with prices, sizes, images and attributes.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
