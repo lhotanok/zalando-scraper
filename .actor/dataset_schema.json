@@ -8,19 +8,19 @@
                 "type": "string",
                 "title": "Product URL",
                 "description": "Product page on Zalando that the data was read from.",
-                "example": "https://www.zalando.co.uk/adidas-originals-spacer-pant-tracksuit-bottoms-blackblack-reflectivenight-grey-ad121a1nj-q11.html"
+                "example": "https://www.zalando.co.uk/anna-field-jersey-dress-coral-option-an621c1xr-g11.html"
             },
             "name": {
                 "type": "string",
                 "title": "Name",
                 "description": "Product name with its category and color, as shown on Zalando.",
-                "example": "SPACER PANT - Tracksuit bottoms - black/black reflective/night grey"
+                "example": "Jersey dress - coral option"
             },
             "sku": {
                 "type": "string",
                 "title": "SKU",
                 "description": "Zalando's product code, shared by all sizes. Each size has its own SKU in `sizes`.",
-                "example": "AD121A1NJ-Q11"
+                "example": "AN621C1XR-G11"
             },
             "brand": {
                 "type": "object",
@@ -30,7 +30,7 @@
                     "name": { "type": "string" },
                     "uri": { "type": "string" }
                 },
-                "example": { "name": "adidas Originals", "uri": "https://www.zalando.co.uk/adidas-originals/" }
+                "example": { "name": "Anna Field by Zalando", "uri": "https://www.zalando.co.uk/anna-field/" }
             },
             "flags": {
                 "type": "array",
@@ -44,33 +44,33 @@
                         "info": { "type": ["string", "null"] }
                     }
                 },
-                "example": [{ "formatted": "up to -10%", "kind": "DEAL", "info": null }]
+                "example": [{ "formatted": "Top rated", "kind": "TOP_RATED", "info": null }, { "formatted": "-9%", "kind": "DEAL", "info": null }]
             },
             "thumbnail": {
                 "type": ["string", "null"],
                 "title": "Thumbnail",
                 "description": "Small product image, 156 px wide. Missing if the gallery has no image.",
-                "example": "https://img01.ztat.net/article/spp-media-p1/a84627d147e840cbb8918763d8010aae/ed52960dd2e4430f98dc2298e862e0e2.jpg?imwidth=156"
+                "example": "https://img01.ztat.net/article/spp-media-p1/7358bc216f7c40619be7294e9df07f55/1586540b69234154b9c13f0a341eb349.jpg?imwidth=156"
             },
             "images": {
                 "type": "array",
                 "title": "Images",
                 "description": "Full-size product images.",
                 "items": { "type": "string" },
-                "example": ["https://img01.ztat.net/article/spp-media-p1/a84627d147e840cbb8918763d8010aae/ed52960dd2e4430f98dc2298e862e0e2.jpg"]
+                "example": ["https://img01.ztat.net/article/spp-media-p1/7358bc216f7c40619be7294e9df07f55/1586540b69234154b9c13f0a341eb349.jpg"]
             },
             "videos": {
                 "type": "array",
                 "title": "Videos",
                 "description": "Product videos as HLS (`.m3u8`) or MP4 links. Empty if the product has no video.",
                 "items": { "type": "string" },
-                "example": ["https://video01.ztat.net/ee8188c8-1a85-45a1-b55d-466089046d8e/cmaf/2494e81629494044b81c301c76bb608c.m3u8"]
+                "example": ["https://video01.ztat.net/b53eb71b-3425-4b38-9961-ebc2dcdbac4b/cmaf/e02ec503990e495094908f5329e31f6c.m3u8"]
             },
             "category": {
                 "type": ["string", "null"],
                 "title": "Category",
-                "description": "Product type, such as `Jumper` or `Tracksuit bottoms`.",
-                "example": "Tracksuit bottoms"
+                "description": "Product type, such as `Jersey dress` or `Jumper`.",
+                "example": "Jersey dress"
             },
             "color": {
                 "type": ["object", "null"],
@@ -80,7 +80,7 @@
                     "name": { "type": "string" },
                     "label": { "type": "string" }
                 },
-                "example": { "name": "black/black reflective/night grey", "label": "black" }
+                "example": { "name": "coral option", "label": "coral" }
             },
             "formattedPrice": {
                 "type": "object",
@@ -91,7 +91,7 @@
                     "current": { "type": "string" },
                     "promotional": { "type": ["string", "null"] }
                 },
-                "example": { "original": "£59.99", "current": "£54.00", "promotional": "£54.00" }
+                "example": { "original": "£33.99", "current": "£31.00", "promotional": "£31.00" }
             },
             "priceCurrency": {
                 "type": ["string", "null"],
@@ -108,7 +108,7 @@
                     "current": { "type": ["number", "null"] },
                     "promotional": { "type": ["number", "null"] }
                 },
-                "example": { "original": 59.99, "current": 54, "promotional": 54 }
+                "example": { "original": 33.99, "current": 31, "promotional": 31 }
             },
             "sizes": {
                 "type": "array",
@@ -122,7 +122,7 @@
                         "stockStatus": { "type": "string" }
                     }
                 },
-                "example": [{ "size": "4/6 (XS)", "sku": "AD121A1NJ-Q1100XS000", "stockStatus": "MANY" }]
+                "example": [{ "size": "XS", "sku": "AN621C1XR-G1100XS000", "stockStatus": "ONE" }, { "size": "S", "sku": "AN621C1XR-G11000S000", "stockStatus": "MANY" }]
             },
             "available": {
                 "type": "boolean",
@@ -172,7 +172,7 @@
                 "example": [{
                     "categoryId": "material_care",
                     "categoryName": "Material & care",
-                    "attributes": [{ "key": "Outer fabric material", "value": "53% cotton, 47% polyester" }]
+                    "attributes": [{ "key": "Outer fabric material", "value": "98% polyester, 2% elastane" }, { "key": "Fabric", "value": "Jersey" }]
                 }]
             }
         },
