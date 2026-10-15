@@ -145,7 +145,7 @@
             "condition": {
                 "type": ["object", "null"],
                 "title": "Condition",
-                "description": "Product condition, such as `{\"kind\": \"NEW\"}`. Null for most products.",
+                "description": "Product condition, such as `{\"kind\": \"PRE_OWNED\"}` for Zalando Pre-owned items. Null for most new products.",
                 "example": null
             },
             "attributeCategories": {
