@@ -7,8 +7,8 @@
 		"node": ">=18.0.0"
 	},
 	"dependencies": {
-		"apify": "^3.1.10",
-		"crawlee": "^3.5.4"
+		"apify": "^3.7.2",
+		"crawlee": "^3.18.2"
 	},
 	"devDependencies": {
 		"@apify/eslint-config-ts": "^0.3.0",
@@ -17,7 +17,7 @@
 		"@typescript-eslint/parser": "^6.7.2",
 		"eslint": "^8.50.0",
 		"tsx": "^4.6.2",
-		"typescript": "^5.3.3"
+		"typescript": "^5.5.4"
 	},
 	"scripts": {
 		"start": "npm run start:dev",
