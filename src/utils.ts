@@ -79,6 +79,14 @@ export const enqueueProductDetails = async (
         exclude: [/\/outfits\//i],
         label: LABELS.DETAIL,
         forefront: true,
+        // Card links carry listing filters such as '?size=6', API links don't, so drop them to save each product once
+        transformRequestFunction: (req) => {
+            const productUrl = new URL(req.url);
+            productUrl.search = '';
+            productUrl.hash = '';
+
+            return { ...req, url: productUrl.href };
+        },
     };
 
     if (urls) {
