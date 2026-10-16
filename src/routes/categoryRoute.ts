@@ -34,6 +34,8 @@ const enqueueNextPages = async (context: CheerioCrawlingContext) => {
     const { processedRequests } = await enqueueLinks({
         urls: nextPageUrls,
         label: LABELS.PAGE,
+        // zalando.de redirects to en.zalando.de, the default 'same-hostname' would skip the pages after it
+        strategy: 'same-domain',
     });
 
     const enqueuedPages = processedRequests.filter((req) => !req.wasAlreadyPresent);
